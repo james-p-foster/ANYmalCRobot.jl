@@ -32,6 +32,32 @@ function mechanism(::Type{T} = Float64;
     return mechanism
 end
 
+function set_nominal!(anymal_state::MechanismState)
+    mechanism = anymal_state.mechanism
+    zero!(anymal_state)
+
+    # Give the legs a natural configuration
+    hip_roll = 0.3
+    hip_pitch = 0.8
+    knee_pitch = 1.2
+    for leg in (:LF, :LH, :RF, :RH)
+        roll = findjoint(mechanism, "$(string(leg))_HAA")
+        pitch = findjoint(mechanism, "$(string(leg))_HFE")
+        knee = findjoint(mechanism, "$(string(leg))_KFE")
+        set_configuration!(anymal_state, roll, 
+            first(string(leg)) == 'R' ? hip_roll : -hip_roll)
+        set_configuration!(anymal_state, pitch, 
+            last(string(leg)) == 'F' ? hip_pitch : -hip_pitch)
+        set_configuration!(anymal_state, knee, 
+            last(string(leg)) == 'H' ? knee_pitch : -knee_pitch)
+    end
+
+    # Lift the floating base joint off the ground
+    floating_joint = first(out_joints(root_body(mechanism), mechanism))
+    set_configuration!(anymal_state, floating_joint, [1; 0; 0; 0; 0; 0; 0.52])
+    return anymal_state
+end
+
 function visualize_frames(mechanism::Mechanism, mvis::MechanismVisualizer;
     show_all_frames = false)
     mechanism_joints = joints(mechanism)
