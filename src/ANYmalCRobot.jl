@@ -34,20 +34,16 @@ end
 
 function visualize_frames(mechanism::Mechanism, mvis::MechanismVisualizer;
     show_all_frames = false)
-    if show_all_frames
-        for body in bodies(mechanism)
-            body_frame = default_frame(body)
-            setelement!(mvis, body_frame, 0.2, "$(body.name)_frame_vis")
-        end
-    else
-        for joint in joints(mechanism)
-            if (string(joint.joint_type) != "Fixed joint") && 
-               (string(joint.joint_type) != "Quaternion floating joint")
-                body = successor(joint, mechanism)
-                body_frame = default_frame(body)
-                setelement!(mvis, body_frame, 0.2, "$(body.name)_frame_vis")
-            end
-        end
+    mechanism_joints = joints(mechanism)
+    if !(show_all_frames)
+        filter!(x -> string(x.joint_type) != "Fixed joint" &&
+            string(x.joint_type) != "Quaternion floating joint", 
+            mechanism_joints)
+    end
+    for joint in mechanism_joints
+        body = successor(joint, mechanism)
+        body_frame = default_frame(body)
+        setelement!(mvis, body_frame, 0.2, "$(body.name)_frame_vis")
     end
 end
 
