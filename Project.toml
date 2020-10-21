@@ -3,6 +3,11 @@ uuid = "06d8eb53-7015-491a-af6b-f3733f5839e3"
 authors = ["James Foster <james.paul.foster@outlook.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+MeshCat = "283c5d60-a78f-5afe-a0af-af636b173e11"
+MeshCatMechanisms = "6ad125db-dd91-5488-b820-c1df6aab299d"
+RigidBodyDynamics = "366cf18f-59d5-5db9-a4de-86a9f6786172"
+
 [compat]
 julia = "1"
 
