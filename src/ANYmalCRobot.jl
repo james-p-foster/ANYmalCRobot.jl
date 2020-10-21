@@ -32,7 +32,7 @@ end
 
 function __init__()
     if !isfile(urdfpath())
-        error("Could not find $(urdfpath()). Please run `import Pkg; Pkg.build(\"MiniCheetahRobot\")`.")
+        error("Could not find $(urdfpath()). Please run `import Pkg; Pkg.build(\"ANYmalCRobot\")`.")
     end
 end
 
