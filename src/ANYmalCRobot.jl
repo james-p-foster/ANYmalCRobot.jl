@@ -21,6 +21,17 @@ function mechanism(::Type{T} = Float64;
         floating = floating, 
         remove_fixed_tree_joints = remove_fixed_tree_joints)
 
+    if contact_model != nothing
+        for leg in (:LF, :LH, :RF, :RH)
+            foot = findbody(mechanism, "$(string(leg))_FOOT")
+            frame = default_frame(foot)
+
+            # bottom of foot
+            add_contact_point!(foot, ContactPoint(Point3D(frame, 0, 0, -0.0075),
+            contact_model))
+        end
+    end
+
     if add_flat_ground
         frame = root_frame(mechanism)
         ground = HalfSpace3D(Point3D(frame, 0., 0., 0.), FreeVector3D(frame, 0., 0., 1.))
