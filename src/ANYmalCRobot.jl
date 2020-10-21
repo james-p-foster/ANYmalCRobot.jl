@@ -88,8 +88,7 @@ function visualize_contacts(mechanism::Mechanism, mvis::MechanismVisualizer)
     for leg in (:LF, :LH, :RF, :RH)
         foot = findbody(mechanism, "$(string(leg))_FOOT")
         frame = default_frame(foot)
-        contact = first(contact_points(foot))
-        setelement!(mvis, Point3D(frame, contact.location.v), 0.005, 
+        setelement!(mvis, Point3D(frame, 0, 0, -0.0075), 0.005, 
             "$(string(leg))_FOOT_contact")
     end
 end
