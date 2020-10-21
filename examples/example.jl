@@ -9,3 +9,5 @@ mvis = MechanismVisualizer(
     anymal,
     URDFVisuals(ANYmalCRobot.urdfpath(), package_path=[ANYmalCRobot.packagepath()]),
     vis)
+
+ANYmalCRobot.visualize_frames(anymal, mvis)
