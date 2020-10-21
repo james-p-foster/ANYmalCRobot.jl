@@ -84,6 +84,16 @@ function visualize_frames(mechanism::Mechanism, mvis::MechanismVisualizer;
     end
 end
 
+function visualize_contacts(mechanism::Mechanism, mvis::MechanismVisualizer)
+    for leg in (:LF, :LH, :RF, :RH)
+        foot = findbody(mechanism, "$(string(leg))_FOOT")
+        frame = default_frame(foot)
+        contact = first(contact_points(foot))
+        setelement!(mvis, Point3D(frame, contact.location.v), 0.005, 
+            "$(string(leg))_FOOT_contact")
+    end
+end
+
 function __init__()
     if !isfile(urdfpath())
         error("Could not find $(urdfpath()). Please run `import Pkg; Pkg.build(\"ANYmalCRobot\")`.")
