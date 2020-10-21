@@ -5,8 +5,8 @@ using RigidBodyDynamics.Contact
 using MeshCat
 using MeshCatMechanisms
 
-packagepath() = joinpath(@__DIR__, "..")
-urdfpath() = joinpath(packagepath(), "anymal_c_simple_description/urdf/anymal.urdf")
+packagepath() = joinpath(@__DIR__, "..", "deps")
+urdfpath() = joinpath(packagepath(), "anymal_c_simple_description", "anymal.urdf")
 
 function default_contact_model()
     SoftContactModel(hunt_crossley_hertz(k = 500e3), ViscoelasticCoulombModel(0.8, 20e3, 100.))
