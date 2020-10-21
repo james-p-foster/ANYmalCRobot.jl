@@ -80,7 +80,7 @@ function visualize_frames(mechanism::Mechanism, mvis::MechanismVisualizer;
     for joint in mechanism_joints
         body = successor(joint, mechanism)
         body_frame = default_frame(body)
-        setelement!(mvis, body_frame, 0.2, "$(body.name)_frame_vis")
+        setelement!(mvis, body_frame, 0.2, "$(body.name)_frame")
     end
 end
 
